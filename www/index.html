@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Radio Sim</title>
+    <link href="calc/style.css" rel="stylesheet" />
+</head>
+<body class="body">
+
+    <div class="calculator demo">
+		<div class="displayframe" >
+    	    <div class="u4 display">
+				<div class="display-inner"><div class="display-text" data-bind="text: display"></div></div>
+		    </div>
+		    <button id="calculator-button-m1" class="u2 button button-gray" data-bind="click: operator"><</button>
+		    <button id="calculator-button-m2" class="u2 button button-gray" data-bind="click: operator"><</button>
+		    <button id="calculator-button-m3" class="u2 button button-gray" data-bind="click: operator"><</button>
+		    <button id="calculator-button-m4" class="u2 button button-gray" data-bind="click: operator"><</button>
+    	    <div class="numpad">
+				<button id="calculator-button-c" class="u2 button button-red" data-bind="click: clear">16</button>
+		        <button id="calculator-button-÷" class="u2 button button-gray" data-bind="click: operator">DW</button>
+		        <button id="calculator-button-=" class="u2 button button-blue" data-bind="click: operator">1/25</button>            
+		        <button id="calculator-button-=" class="u2 button button-gray" data-bind="click: operator">&#128161;</button>            
+		    </div>
+		</div>
+    	    <div class="numpad">
+			<button id="calculator-button-1" class="u1 button button-gray" data-bind="click: number">1</button>
+			<button id="calculator-button-2" class="u1 button button-gray" data-bind="click: number">2</button>
+			<button id="calculator-button-3" class="u1 button button-gray" data-bind="click: number">3</button>
+			<button id="calculator-button-4" class="u1 button button-gray" data-bind="click: number">4</button>
+			<button id="calculator-button-5" class="u1 button button-gray" data-bind="click: number">5</button>
+			<button id="calculator-button-6" class="u1 button button-gray" data-bind="click: number">6</button>
+			<button id="calculator-button-7" class="u1 button button-gray" data-bind="click: number">7</button>
+			<button id="calculator-button-8" class="u1 button button-gray" data-bind="click: number">8</button>
+   	        <button id="calculator-button-9" class="u1 button button-gray" data-bind="click: number">9</button>
+	        <button id="calculator-button-backspace" class="u1 button button-backspace button-gray" data-bind="click: backspace" oldValue:"&#x21e4;">C</button>
+			<button id="calculator-button-0" class="u1 button button-gray" data-bind="click: number">0</button>
+	        <button id="calculator-button-negate" class="u1 button button-gray" data-bind="click: negate">E</button>    
+        </div>
+		<button id="calculator-button-distress" class="button-red udistress button "  data-bind="click: operator">distress</button>            
+		<button id="calculator-button-vol" class="button-gray uvolume " data-bind="click: rotating" old="&#x1f50a;">&#8593;</button>            
+    </div>
+
+    <script src="calc/knockout-2.1.0.js"></script>
+    <script src="calc/calculator.js"></script>
+
+</body>
+</html>
