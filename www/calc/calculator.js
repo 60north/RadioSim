@@ -104,7 +104,7 @@ var Calculator = function() {
 		oldCoords = newCoords;
 		// - dialHolder.y;
 		var angle = Math.atan2(-22, dx);
-		angle = angle / (Math.PI / 90)+40;
+		angle = angle / (Math.PI / 90) + 70;
 		console.log('Received Event: ' + dx + '-' + dy + ";angle:" + angle);
 		//self.rotation = angle;
 		var deg = angle;
@@ -115,6 +115,12 @@ var Calculator = function() {
 		view.style.transform = 'rotate(' + deg + 'deg)';
 		//	view.display = "123";
 		view.rotation = deg;
+		if(deg < 0) {
+			deg = 0;
+			self.display("Off");
+		} else {
+			self.display("vol:" + Math.round(deg));
+		}
 
 	}
 	// Callback for negating a number
