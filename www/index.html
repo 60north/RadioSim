@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Radio Sim</title>
-    <link href="calc/style.css" rel="stylesheet" />
+    <link href="radio/style.css" rel="stylesheet" />
 </head>
 <body class="body">
 
@@ -37,11 +37,13 @@
 	        <button id="calculator-button-negate" class="u1 button button-gray" data-bind="click: negate">E</button>    
         </div>
 		<button id="calculator-button-distress" class="button-red udistress button "  data-bind="click: operator">distress</button>            
-		<button id="calculator-button-vol" class="button-gray uvolume " data-bind="click: rotating" old="&#x1f50a;">&#8593;</button>            
+		<button id="calculator-button-vol" class="button-gray uvolume " data-bind="event:{ mousedown: volumedown, mousemove:volume, mouseup:volumeup, mouseover:volumeup}" old="&#x1f50a;">&#8593;</button>            
     </div>
 
-    <script src="calc/knockout-2.1.0.js"></script>
-    <script src="calc/calculator.js"></script>
+    <script src="radio/knockout-2.1.0.js"></script>
+    <script src="radio/radio_state.js"></script>
+    <script src="radio/displayer.js"></script>
+    <script src="radio/uicontroller.js"></script>
 
 </body>
 </html>

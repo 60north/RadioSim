@@ -11,14 +11,24 @@
 	};
 }
 
-var Calculator = function() {
+function getAngle(event) {
+	var newCoords = getRelativeCoords(event);
+	var dx = newCoords.x - 40;
+	var dy = newCoords.y - 64;
+	var angle = Math.atan2(-22, dx);
+	angle = angle / (Math.PI / 90) + 70;
+	return angle;
+}
+
+var RadioHandler = function() {
 
 	// Helper variable declarations
 	var self = this;
 	var decimalMark = ".";
 	var sum = 0;
 	var prevOperator;
-	var oldCoords;
+	var oldTouchValue = 0;
+	var oldVolumeValue = 0;
 	// Define default values
 	self.display = ko.observable("0");
 	self.isShowingResult = ko.observable(false);
@@ -74,52 +84,35 @@ var Calculator = function() {
 		// two terms to perform calculation on
 		if(prevOperator)
 			self.display(sum);
-
-		// Make sure we don't try to calculate with the equal sign
 		prevOperator = (button === "=") ? null : button;
-		// Always set the calculator into showing result state
-		// after an operator button has been pressed
 		self.isShowingResult(true);
 	};
-	self.rotating = function(item, event) {
-		var view = event.target;
+	self.volumeup = function(item, event) {
+		radioState.volumePressed = false;
+	}
 
-		var dx = event.stageX;
-		// - dialHolder.x;
-		var dy = event.stageY;
-		console.log("dxdy:" + dx + ":" + dy);
-		var newCoords = getRelativeCoords(event);
-		if(oldCoords == undefined) {
-			dx = newCoords.x;
-			dy = newCoords.y;
+	self.volumedown = function(item, event) {
+		radioState.volumePressed = true;
+		oldTouchValue = getAngle(event);
+		if(radioState.volume != undefined) {
+			oldVolumeValue = radioState.volume;
 		} else {
-			dx = newCoords.x;
-			// - oldCoords.x;
-			dy = newCoords.y;
-			// - oldCoords.y;
+			oldVolumeValue = 0;
 		}
-		dx = newCoords.x - 40;
-		dy = newCoords.y - 64;
-
-		oldCoords = newCoords;
-		// - dialHolder.y;
-		var angle = Math.atan2(-22, dx);
-		angle = angle / (Math.PI / 90) + 70;
-		console.log('Received Event: ' + dx + '-' + dy + ";angle:" + angle);
-		//self.rotation = angle;
-		var deg = angle;
-		view.style.webkitTransform = 'rotate(' + deg + 'deg)';
-		view.style.mozTransform = 'rotate(' + deg + 'deg)';
-		view.style.msTransform = 'rotate(' + deg + 'deg)';
-		view.style.oTransform = 'rotate(' + deg + 'deg)';
-		view.style.transform = 'rotate(' + deg + 'deg)';
-		//	view.display = "123";
-		view.rotation = deg;
-		if(deg < 0) {
-			deg = 0;
-			self.display("Off");
-		} else {
-			self.display("vol:" + Math.round(deg));
+		volume(item, event);
+	}
+	self.volume = function(item, event) {
+		if(radioState.volumePressed) {
+			var view = event.target;
+			angle = getAngle(event) - oldTouchValue + oldVolumeValue;
+			// console.log('Received Event: ' + dx + '-' + dy + ";angle:" + angle);
+			radioState.volume = angle;
+			view.style.webkitTransform = 'rotate(' + radioState.volume + 'deg)';
+			view.style.mozTransform = 'rotate(' + radioState.volume + 'deg)';
+			view.style.msTransform = 'rotate(' + radioState.volume + 'deg)';
+			view.style.oTransform = 'rotate(' + radioState.volume + 'deg)';
+			view.style.transform = 'rotate(' + radioState.volume + 'deg)';
+			displayer.display(self);
 		}
 
 	}
@@ -162,8 +155,7 @@ var Calculator = function() {
 };
 
 // Apply knockout bindings
-ko.applyBindings(new Calculator());
-
+ko.applyBindings(new RadioHandler());
 // Enable keyboard controll
 (function() {
 	// Key codes and their associated calculator buttons
@@ -244,7 +236,7 @@ ko.applyBindings(new Calculator());
 			}, 100);
 			// Fire click event
 			fireEvent(element, "click");
-			fireEvent(element, "move");
+			fireEvent(element, "mouseover");
 		}
 	}
 	// Attach a keyup-event listener on the document
